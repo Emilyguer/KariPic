@@ -1,0 +1,29 @@
+<nav>
+  <ul>
+    <li>
+      <%= link_to "Photo", root_path %>
+    </li>
+    <li>
+      <% if user_signed_in? %>
+        <strong>
+          <%= current_user.name %>
+          <%= image_tag current_user.photo.thumb.url, class: "user-avatar" %>
+        </strong> |
+      </li>
+      <li>
+        <%= link_to "Editar perfil", edit_user_registration_path %>
+      </li>
+      <li>
+        <%= button_to "Cerrar sesión", destroy_user_session_path, method: :delete %>
+      </li>
+    <% else %>
+      <li>
+        <%= link_to "Registrate", new_user_registration_path %>
+      </li>
+      <li>
+        <%= link_to "Inicia sesión", new_user_session_path %>
+      </li>
+    <% end %>
+  </ul>
+</nav>
+

@@ -1,0 +1,37 @@
+<%= form_for @photo, html: { multipart: true } do |f| %>
+  <% if f.object.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(f.object.errors.count, "error") %> prohibited this photo from being saved:</h2>
+
+      <ul>
+        <% f.object.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :title, style: "display: block" %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :description, style: "display: block" %>
+    <%= f.text_area :description %>
+  </div>
+
+  <div>
+    <%= f.label :image, style: "display: block" %>
+    <%= f.file_field :image %>
+  </div>
+
+  <div>
+    <%= f.label :user_id, style: "display: block" %>
+    <%= f.text_field :user_id %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

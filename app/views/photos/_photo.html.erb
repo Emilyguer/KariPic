@@ -1,0 +1,24 @@
+<div id="<%= dom_id photo %>">
+
+  <p>
+    <strong>Image:</strong>
+    <%= image_tag photo.image.url, class: "image is-4by3" %>
+  </p>
+
+  <p>
+    <strong>Title:</strong>
+    <%= photo.title %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= photo.description %>
+  </p>
+
+
+  <p>
+    <strong>User:</strong>
+    <%= photo.user_id %>
+  </p>
+
+</div>
