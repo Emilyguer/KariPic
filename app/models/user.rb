@@ -7,4 +7,6 @@ devise :database_authenticatable, :registerable,
         has_many :photos
 
         mount_uploader :photo, PhotoUploader
+
+        enum role: [:normal, :admin]
 end
