@@ -1,5 +1,6 @@
 class PhotosController < ApplicationController
   before_action :set_photo, only: %i[ show edit update destroy ]
+  before_action :authenticate_user! # Asegura que el usuario esté autenticado
 
   # GET /photos or /photos.json
   def index
@@ -12,8 +13,13 @@ class PhotosController < ApplicationController
 
   # GET /photos/new
   def new
+    if current_user.admin? # Verifica si el usuario tiene el rol 'admin'
     @photo = Photo.new
+  else
+    flash[:alert] = "Solo los administradores pueden subir fotos."
+    redirect_to root_path # Redirige a la página principal si el usuario no es un administrador
   end
+end
 
   # GET /photos/1/edit
   def edit
