@@ -21,18 +21,18 @@ class PhotosController < ApplicationController
 
   # POST /photos or /photos.json
   def create
-    @photo = Photo.new(photo_params)
-
-    respond_to do |format|
-      if @photo.save
-        format.html { redirect_to photo_url(@photo), notice: "Photo was successfully created." }
-        format.json { render :show, status: :created, location: @photo }
+        if current_user.admin? # Verifica si el usuario tiene el rol 'admin'
+          @photo = Photo.new(photo_params)
+        if @photo.save
+          redirect_to @photo, notice: 'La foto se ha subido exitosamente.'
+        else
+          render 'new'
+        end
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
+        flash[:alert] = 'Solo los administradores pueden subir fotos.'
+        redirect_to root_path
       end
     end
-  end
 
   # PATCH/PUT /photos/1 or /photos/1.json
   def update

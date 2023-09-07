@@ -1,10 +1,10 @@
-<%= form_with(model: photo) do |form| %>
-  <% if photo.errors.any? %>
+<%= form_for @photo, html: { multipart: true } do |f| %>
+  <% if f.object.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(photo.errors.count, "error") %> prohibited this photo from being saved:</h2>
+      <h2><%= pluralize(f.object.errors.count, "error") %> prohibited this photo from being saved:</h2>
 
       <ul>
-        <% photo.errors.each do |error| %>
+        <% f.object.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -12,26 +12,26 @@
   <% end %>
 
   <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+    <%= f.label :title, style: "display: block" %>
+    <%= f.text_field :title %>
   </div>
 
   <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
+    <%= f.label :description, style: "display: block" %>
+    <%= f.text_area :description %>
   </div>
 
   <div>
-    <%= form.label :image, style: "display: block" %>
-    <%= form.text_field :image %>
+    <%= f.label :image, style: "display: block" %>
+    <%= f.file_field :image %>
   </div>
 
   <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
+    <%= f.label :user_id, style: "display: block" %>
+    <%= f.text_field :user_id %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= f.submit %>
   </div>
 <% end %>
