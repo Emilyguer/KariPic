@@ -1,5 +1,5 @@
 class PhotosController < ApplicationController
-  before_action :set_photo, only: %i[ show ]
+  before_action :set_photo, only: %i[ show edit update destroy ]
   before_action :authenticate_user! # Asegura que el usuario esté autenticado
   before_action :authorize_admin, only: [:edit, :update, :destroy]
 

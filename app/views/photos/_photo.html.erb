@@ -1,22 +1,22 @@
-<div id="<%= dom_id photo %>">
-  <p>
-    <strong>Image:</strong>
-    <%= image_tag photo.image.url, class: "image is-4by3" %>
-  </p>
+<div class="container text-center">
+  <div id="<%= dom_id photo %>" class="card mb-3 d-inline-block">
+    <div class="card-body">
+      <%= image_tag photo.image.url, class: "img-thumbnail rounded mb-3", width: "500px" %>
+      <p class="card-title fs-1">
+        <strong> </strong>
+        <%= photo.title %>
+      </p>
 
-  <p>
-    <strong>Title:</strong>
-    <%= photo.title %>
-  </p>
+      <p class="card-text text-justify text-lowercase">
+        <strong> </strong>
+        <%= photo.description %>
+      </p>
 
-  <p>
-    <strong>Description:</strong>
-    <%= photo.description %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= photo.user_id %>
-  </p>
-
+      <p class="card-text">
+        <strong> Foto y texto by:</strong>
+        <%= photo.user.name %>
+      </p>
+    </div>
+  </div>
 </div>
+
