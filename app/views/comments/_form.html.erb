@@ -1,0 +1,25 @@
+<div class="container mt-5">
+  <%= form_with(model: @comment, local: true) do |form| %>
+    <% if @comment.errors.any? %>
+      <div class="alert alert-danger">
+        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+        <ul>
+          <% @comment.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :content, class: "control-label", style: "display: block" %>
+      <%= form.text_area :content, class: "form-control" %>
+    </div>
+
+    <%= form.hidden_field :image_id, value: @photo.id %>
+
+    <div class="form-group mt-4">
+      <%= form.submit "Guardar", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
