@@ -2,9 +2,30 @@
 
 <%= render @photo %>
 
-<div>
-  <%= link_to "Edit this photo", edit_photo_path(@photo) %> |
-  <%= link_to "Back to photos", photos_path %>
+<%= render 'comments/form', comment: @comments %>
 
-  <%= button_to "Destroy this photo", @photo, method: :delete %>
+<!-- Muestra los comentarios debajo de cada foto -->
+<div class="comments">
+  <% if @comments.present? %>
+    <h3>Comentarios:</h3>
+    <ul>
+      <% @comments.each do |comment| %>
+        <li>
+          <img src="<%= comment.user.photo_url %>" alt="<%= comment.user.name %>">
+          <strong><%= comment.user.name %>:</strong>
+          <%= comment.content %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No hay comentarios para esta foto.</p>
+  <% end %>
+</div>
+
+<div>
+<% if current_user && current_user.admin? %>
+  <%= link_to "Editar", edit_photo_path(@photo) %>
+  <%= link_to "Eliminar", @photo, method: :delete, data: { confirm: "¿Estás seguro?" } %>
+<% end %>
+<%= link_to "Back to photos", photos_path %>
 </div>

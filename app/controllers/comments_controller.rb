@@ -13,6 +13,7 @@ class CommentsController < ApplicationController
   # GET /comments/new
   def new
     @comment = Comment.new
+    render :new
   end
 
   # GET /comments/1/edit
@@ -21,15 +22,19 @@ class CommentsController < ApplicationController
 
   # POST /comments or /comments.json
   def create
-    @comment = Comment.new(comment_params)
+ # Agrega una salida de depuración para verificar los valores de params
+ puts "Params recibidos en la acción create:"
+ puts params.inspect
+    
+    @photo = Photo.find(params[:comment][:image_id])
+    @comment = @photo.comments.build(comment_params)
+    @comment.user = current_user # Asocia el comentario al usuario actual
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to comment_url(@comment), notice: "Comment was successfully created." }
-        format.json { render :show, status: :created, location: @comment }
+        format.html { redirect_to @photo, notice: "Comentario agregado exitosamente." }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+        format.html { render 'photos/show' }
       end
     end
   end
@@ -65,6 +70,6 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:content, :user_id, :photo_id)
+      params.require(:comment).permit(:content)
     end
 end

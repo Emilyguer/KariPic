@@ -1,14 +1,18 @@
 class PhotosController < ApplicationController
-  before_action :set_photo, only: %i[ show edit update destroy ]
+  before_action :set_photo, only: %i[ show ]
   before_action :authenticate_user! # Asegura que el usuario esté autenticado
+  before_action :authorize_admin, only: [:edit, :update, :destroy]
 
   # GET /photos or /photos.json
   def index
-    @photos = Photo.all
+    @photos = Photo.all.includes(:comments) # Carga las fotos con sus comentarios
   end
 
   # GET /photos/1 or /photos/1.json
   def show
+    @photo = Photo.find(params[:id])
+    @comments = @photo.comments
+    @comment = Comment.new
   end
 
   # GET /photos/new
@@ -23,6 +27,7 @@ end
 
   # GET /photos/1/edit
   def edit
+    @photo = Photo.find(params[:id])
   end
 
   # POST /photos or /photos.json
@@ -68,6 +73,13 @@ end
     def set_photo
       @photo = Photo.find(params[:id])
     end
+
+    def authorize_admin
+      unless current_user && current_user.admin?
+        redirect_to root_path, alert: "No tienes permiso para realizar esta acción."
+      end
+    end
+
 
     # Only allow a list of trusted parameters through.
     def photo_params
